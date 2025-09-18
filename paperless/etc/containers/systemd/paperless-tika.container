@@ -1,0 +1,19 @@
+[Unit]
+Description=Tika for Paperless-ngx
+#RequiresMountsFor=%t/containers
+
+[Container]
+Pod=paperless.pod
+
+Image=docker.io/apache/tika:latest
+
+# HealthCmd=curl --fail --no-keepalive --silent -A "HealthCheck" http://localhost:9998/tika > /dev/null || exit 1
+# HealthStartPeriod=120s
+# HealthInterval=10s
+# HealthTimeout=10s
+# HealthRetries=5
+# HealthOnFailure=kill
+# Notify=true
+
+[Service]
+Restart=on-failure

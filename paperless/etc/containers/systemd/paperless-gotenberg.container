@@ -1,0 +1,24 @@
+[Unit]
+Description=Gotenberg for Paperless-ngx
+#RequiresMountsFor=%t/containers
+
+[Container]
+Pod=paperless.pod
+
+Image=docker.io/gotenberg/gotenberg:8.20
+
+Exec=gotenberg
+
+Environment=CHROMIUM_DISABLE_JAVASCRIPT=true
+Environment=CHROMIUM_ALLOW_LIST=file:///tmp/.*
+
+HealthCmd=curl --fail --no-keepalive --silent -A "HealthCheck" http://localhost:3000/ > /dev/null || exit 1
+# HealthStartPeriod=120s
+# HealthInterval=10s
+# HealthTimeout=10s
+# HealthRetries=5
+HealthOnFailure=kill
+Notify=healthy
+
+[Service]
+Restart=on-failure

@@ -1,0 +1,8 @@
+[Volume]
+# Device=host-bc-24-11-5d-2d-15.localdomain:/thin/paperless/export
+# Options=defaults
+# Type=nfs
+
+Device=host-bc-24-11-5d-2d-15.localdomain:/slowtank/prod/paperless/export
+Options=defaults
+Type=nfs
