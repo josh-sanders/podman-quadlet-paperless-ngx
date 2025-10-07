@@ -1,0 +1,21 @@
+###[ Current settings for pagekite.py v1.5.2.201011. ]#########
+#
+## NOTE: This file may be rewritten/reordered by pagekite.py.
+#
+
+##[ Default kite and account details ]##
+kitesecret = 12345
+
+##[ Front-end settings: use pagekite.net defaults ]##
+defaults
+
+##[ Back-ends and local services ]##
+service_on  =https:paperless.example.pagekite.me  :localhost:443     :@kitesecret
+service_on  =https:paperless.example.com          :localhost:443     :@kitesecret
+
+##[ Miscellaneous settings ]##
+savefile = /etc/pagekite/.pagekite.rc
+max_read_bytes = 16256x3.100
+
+###[ End of pagekite.py configuration ]#########
+END

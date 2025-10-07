@@ -7,7 +7,10 @@ Pod=paperless.pod
 
 Image=docker.io/library/postgres:17
 
-Volume=nfs-paperless-postgres.volume:/var/lib/postgresql/data:Z
+Volume=paperless-postgres.volume:/var/lib/postgresql/data:Z 
+
+User=999
+Group=999
 
 Environment=POSTGRES_DB=paperless
 Environment=POSTGRES_USER=paperless

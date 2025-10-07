@@ -1,0 +1,21 @@
+[Unit]
+Description=Cloudflared for Paperless-ngx
+After=paperless-caddy.container
+Requires=paperless-caddy.container
+
+[Container]
+Pod=paperless.pod
+
+Image=docker.io/cloudflare/cloudflared:latest
+
+Exec=tunnel --no-autoupdate run
+
+Environment=TUNNEL_TOKEN=12345
+
+AddCapability=CAP_NET_ADMIN
+
+[Install]
+#WantedBy=multi-user.target default.target
+
+[Service]
+Restart=on-failure

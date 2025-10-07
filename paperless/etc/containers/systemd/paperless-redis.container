@@ -7,7 +7,7 @@ Pod=paperless.pod
 
 Image=docker.io/library/redis:8
 
-Volume=nfs-paperless-redis.volume:/data:Z
+Volume=paperless-redis.volume:/data:Z
 
 HealthCmd=redis-cli -p 6379 ping
 # HealthInterval=10s

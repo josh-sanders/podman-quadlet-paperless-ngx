@@ -1,0 +1,52 @@
+# Global Options Block
+{
+	debug
+	admin off
+}
+## The following is generally as per the [Paperless-NGX wiki](https://github.com/paperless-ngx/paperless-ngx/wiki/Using-a-Reverse-Proxy-with-Paperless-ngx#caddy)
+#### Reusable Snippets
+(common) {
+	tls josh@example.com {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+	header {
+		# Enable HSTS
+		Strict-Transport-Security "max-age=31536000; includeSubdomains"
+		X-XSS-Protection 0
+		# Prevent browsers from incorrectly detecting non-scripts as scripts and MIME type sniffing
+		X-Content-Type-Options nosniff
+		-Server
+		# Enable cross-site filter (XSS) and tell browser to block detected attacks
+		X-Frame-Options "ALLOW-FROM *.example.com"
+		Permissions-Policy "geolocation=(self  *.example.com), microphone=(), interest-cohort=()"
+		import content-security-general
+	}
+}
+#### Content Security Snippets
+(content-security-general) {
+	# Default setup
+	# Disable unsafe inline/eval and plugins, only load scripts and stylesheets from same origin, fonts from google,
+	#   and images from same origin and imgur. Sites should aim for policies like this.
+	Content-Security-Policy "frame-ancestors  *.example.com"
+	#"default-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; img-src 'self'; form-action 'self'; connect-src 'self'; frame-ancestors 'none';"
+	#default-src 'none'; font-src https://fonts.gstatic.com; img-src 'self' https://i.imgur.com; object-src 'none'; script-src 'self'; style-src 'self'
+}
+(content-security-basic) {
+	# Most basic setup
+	# Disable unsafe inline/eval, only load resources from same origin except also allow images from imgur
+	# Also disables the execution of plugins
+	Content-Security-Policy default-src 'self'; img-src 'self' https://i.imgur.com; object-src 'none'
+}
+(content-security-api) {
+	# API
+	# Disable the loading of any resources and disable framing, recommended for APIs to use
+	Content-Security-Policy default-src 'none'; frame-ancestors 'none'
+}
+#### Sites
+paperless.example.com {
+	import common
+	reverse_proxy localhost:8000 {
+		header_up Host {http.reverse_proxy.upstream.hostport}
+	}
+}

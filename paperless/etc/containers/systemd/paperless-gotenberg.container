@@ -1,6 +1,5 @@
 [Unit]
 Description=Gotenberg for Paperless-ngx
-#RequiresMountsFor=%t/containers
 
 [Container]
 Pod=paperless.pod

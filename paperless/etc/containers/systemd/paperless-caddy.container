@@ -1,0 +1,36 @@
+[Unit]
+Description=caddy reverse proxy for Paperless-ngx
+RequiresMountsFor=%t/containers
+After=paperless-ngx.container
+Requires=paperless-ngx.container
+
+[Container]
+Pod=paperless.pod
+
+Image=paperless-caddy.build
+#Image=localhost/caddy
+#Image=docker.io/library/caddy:latest
+#Image=ghcr.io/caddybuilds/caddy-cloudflare:latest
+
+Notify=true
+
+# PublishPort=80:80/tcp
+# PublishPort=443:443/tcp
+# PublishPort=443:443/udp
+
+Volume=/home/josh/stow/paperless/caddy.d:/etc/caddy:Z
+Volume=paperless-caddy-config.volume:/config:Z
+Volume=paperless-caddy-data.volume:/data:Z
+
+Environment=CLOUDFLARE_API_TOKEN=12345
+
+AddCapability=CAP_NET_ADMIN
+
+User=1000
+Group=1000
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Service]
+Restart=on-failure

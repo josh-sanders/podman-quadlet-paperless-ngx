@@ -2,23 +2,25 @@
 Description=Webserver for Paperless-ngx
 RequiresMountsFor=%t/containers
 
-Requires=paperless-redis.service
-After=paperless-redis.service
-Requires=paperless-postgres.service
-After=paperless-postgres.service
-Wants=paperless-tika.service
-Wants=paperless-gotenberg.service
+Requires=paperless-redis.container
+Requires=paperless-postgres.container
+After=paperless-redis.container
+After=paperless-postgres.container
+Wants=paperless-tika.container
+Wants=paperless-gotenberg.container
 
 [Container]
 Pod=paperless.pod
 
 Image=ghcr.io/paperless-ngx/paperless-ngx:2.18
-#Image=ghcr.io/paperless-ngx/paperless-ngx:2.0.0
 
-Volume=nfs-paperless-data.volume:/usr/src/paperless/data:Z
-Volume=nfs-paperless-media.volume:/usr/src/paperless/media:Z
-Volume=nfs-paperless-export.volume:/usr/src/paperless/export:Z
-Volume=nfs-paperless-consume.volume:/usr/src/paperless/consume:z
+Volume=paperless-data.volume:/usr/src/paperless/data:Z
+Volume=paperless-media.volume:/usr/src/paperless/media:Z
+Volume=paperless-export.volume:/usr/src/paperless/export:Z
+Volume=paperless-consume.volume:/usr/src/paperless/consume:z
+
+User=1000
+Group=1000
 
 Environment=PAPERLESS_REDIS=redis://localhost:6379
 Environment=PAPERLESS_DBHOST=localhost

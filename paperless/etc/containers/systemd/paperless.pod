@@ -1,8 +1,16 @@
 [Unit] 
 Description=Paperless ngx pod
 
-[Pod] 
-PublishPort=8000:8000
+[Pod]
+Network=paperless.network
+
+UIDMap=0:0:65536
+UIDMap=+0:1234:1
+
+PublishPort=80:80/tcp
+PublishPort=443:443/tcp
+PublishPort=443:443/udp
+# PublishPort=8000:8000/tcp
 
 [Install] 
 WantedBy=multi-user.target default.target

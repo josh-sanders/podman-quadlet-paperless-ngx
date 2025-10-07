@@ -1,0 +1,4 @@
+[Build]
+ImageTag=localhost/caddy
+File=/home/josh/stow/paperless/caddy.d/Containerfile
+SetWorkingDirectory=unit

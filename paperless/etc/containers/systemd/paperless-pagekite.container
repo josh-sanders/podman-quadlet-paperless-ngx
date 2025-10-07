@@ -1,0 +1,22 @@
+[Unit]
+Description=pagekite tunnel for Paperless-ngx
+RequiresMountsFor=%t/containers
+After=paperless-caddy.container
+Requires=paperless-caddy.container
+
+[Container]
+Pod=paperless.pod
+
+Image=paperless-pagekite.build
+#Image=localhost/pagekite
+
+Volume=/home/josh/stow/paperless/pagekite.d:/etc/pagekite:Z
+
+User=1000
+Group=1000
+
+[Install]
+#WantedBy=multi-user.target default.target
+
+[Service]
+Restart=on-failure

@@ -1,0 +1,4 @@
+[Build]
+ImageTag=localhost/pagekite
+File=/home/josh/stow/paperless/pagekite.d/Containerfile
+SetWorkingDirectory=unit
