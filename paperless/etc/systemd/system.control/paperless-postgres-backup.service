@@ -1,0 +1,10 @@
+# [Unit]
+# Description=Backup paperless postgres
+# Wants=paperless-backup.timer
+
+# [Service]
+# Type=oneshot
+# ExecStart=podman exec -u=999 -e=POSTGRES_PASSWORD=paperless systemd-paperless-postgres pg_dump -U paperless -c -C paperless > paperless.pg_dump.sql
+
+# [Install]
+# WantedBy=multi-user.target

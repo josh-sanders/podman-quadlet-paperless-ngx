@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup paperless ngx
+Wants=paperless-backup.timer
+
+[Service]
+Type=oneshot
+ExecStart=podman exec -u=1000 systemd-paperless-ngx document_exporter ../export -d -p -sm
+
+[Install]
+WantedBy=multi-user.target

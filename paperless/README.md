@@ -37,6 +37,22 @@ Both Pagekite and Cloudflare tunnel are included. Pagekite is free as in freedom
 
 Caddy is provided with the cloudflare addon so that it can setup TLS automagically, if you use cloudflare as your DNS.
 
+## Backup
+
+There is a service for backing up Paperless ngx using the document_exporter function once per day. There is also a service for running pgdump but I haven't tested it recently as I no longer use it.
+
+### Keep selinux happy 
+
+Because stow links the files into `/etc` the selinux labels are not changed like the would be if the files were copied. Permenently update the labels like so:
+
+    # semanage fcontext -a -u system_u -t systemd_unit_file_t "/home/josh/stow/paperless/etc/systemd/system.control(/.*)?"
+    # restorecon -Rv /home/josh/stow/paperless/etc/systemd/system.control
+    # ls -lZ /home/josh/stow/paperless/etc/systemd/system.control
+
+### Enable the timer
+
+    # systemctl enable paperless-backup.timer
+
 ## References and similar work
 
 Thank you:
